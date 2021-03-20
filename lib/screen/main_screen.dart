@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../page.dart';
+
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
 
@@ -8,6 +10,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int currentIndex = 0;
+
+void onIndexChanged(int index){
+  setState(() {
+    currentIndex = index;
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
                     CircleAvatar(
                       backgroundImage: NetworkImage(
                           "https://i2.wp.com/travelblog.expedia.co.th/wp-content/uploads/2019/07/cover-%E0%B9%84%E0%B8%AB%E0%B8%A7%E0%B9%89%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%9E%E0%B8%A3-9-%E0%B8%A7%E0%B8%B1%E0%B8%94.jpg?resize=1140%2C550&ssl=1"),
-                          radius: 50,
+                      radius: 50,
                     ),
                     Text("ชื่อวัด"),
                   ],
@@ -44,8 +54,11 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text("วัดที่น่าสนใจ"),
+              onTap: () {
+                Navigator.pushNamed(context, '/history');
+              },    
+              leading: Icon(Icons.people),
+              title: Text("ประวัติ"),
             ),
             ListTile(
               leading: Icon(Icons.people),
@@ -55,7 +68,20 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       appBar: AppBar(
-        title: Text("App Wat"),
+        title: Text(pages[currentIndex].title),
+      ),
+      body: pages[currentIndex].page,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onIndexChanged,
+        items: pages
+            .map(
+              (page) => BottomNavigationBarItem(
+                icon: page.icon,
+                label: page.label,
+              ),
+            )
+            .toList(),
       ),
     );
   }
