@@ -64,6 +64,13 @@ void onIndexChanged(int index){
               leading: Icon(Icons.people),
               title: Text("ปอยหลวงเชียงใหม่"),
             ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/credit');
+              },    
+              leading: Icon(Icons.people),
+              title: Text("ผู้จัดทำ"),
+            ),
           ],
         ),
       ),
